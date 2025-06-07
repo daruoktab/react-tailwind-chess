@@ -308,10 +308,13 @@ const App: React.FC = () => {
       </header>
       
       <div className="flex flex-col lg:flex-row gap-6 items-start w-full max-w-sm sm:max-w-md md:max-w-xl lg:max-w-6xl xl:max-w-7xl relative z-10">
-        <div className="w-full lg:w-64 order-2 lg:order-1 flex-shrink-0">
+        {/* Left Side - Black's Captures & White's Captures */}
+        <div className="w-full lg:w-64 order-2 lg:order-1 flex-shrink-0 space-y-4">
+           <CapturedPiecesDisplay pieces={capturedByBlack} title="Black's Captures" />
            <CapturedPiecesDisplay pieces={capturedByWhite} title="White's Captures" />
         </div>
 
+        {/* Center - Chess Board */}
         <div className="flex-grow flex justify-center order-1 lg:order-2 w-full lg:w-auto">
           <div className="p-4 bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/50">
             <BoardComponent
@@ -323,39 +326,35 @@ const App: React.FC = () => {
           </div>
         </div>
         
-        <div className="w-full lg:w-64 order-3 lg:order-3 flex-shrink-0">
-           <CapturedPiecesDisplay pieces={capturedByBlack} title="Black's Captures" />
+        {/* Right Side - Description, Move History, Reset Button */}
+        <div className="w-full lg:w-64 order-3 lg:order-3 flex-shrink-0 space-y-6">
+          {/* Game Info */}
+          <div className="p-4 bg-slate-800/30 backdrop-blur-sm rounded-lg border border-slate-700/50">
+            <p className="font-medium mb-2 text-center">🎯 Modern Chess Experience</p>
+            <p className="text-xs leading-relaxed text-slate-400">
+              Complete chess implementation with castling, pawn promotion, check/checkmate detection, and move history. 
+              Click any piece to see available moves, then click a highlighted square to make your move.
+            </p>
+          </div>
+          
+          {/* Move History */}
+          <NotationDisplay moveHistory={moveHistory} />
+          
+          {/* Reset Button */}
+          <button
+            type="button"
+            onClick={resetGame}
+            className="w-full px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-base rounded-xl shadow-xl transform transition-all duration-200 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-sky-500 focus:ring-opacity-50 active:scale-95"
+          >
+            <span className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              {isCheckmate || isStalemate ? 'Play Again' : 'Reset Game'}
+            </span>
+          </button>
         </div>
       </div>
-      
-      <div className="mt-6 md:mt-8 w-full max-w-sm sm:max-w-md md:max-w-xl lg:max-w-6xl xl:max-w-7xl relative z-10">
-        <div className="lg:px-[calc(16rem+1.5rem)]">
-             <NotationDisplay moveHistory={moveHistory} />
-        </div>
-      </div>
-
-      <button
-        type="button"
-        onClick={resetGame}
-        className="mt-6 md:mt-8 px-8 py-3 md:px-10 md:py-4 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-base md:text-lg rounded-xl shadow-xl transform transition-all duration-200 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-sky-500 focus:ring-opacity-50 active:scale-95 relative z-10"
-      >
-        <span className="flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          {isCheckmate || isStalemate ? 'Play Again' : 'Reset Game'}
-        </span>
-      </button>
-
-      <footer className="mt-8 md:mt-10 text-sm text-slate-400 text-center max-w-lg relative z-10">
-        <div className="p-4 bg-slate-800/30 backdrop-blur-sm rounded-lg border border-slate-700/50">
-          <p className="font-medium mb-2">🎯 Modern Chess Experience</p>
-          <p className="text-xs leading-relaxed">
-            Complete chess implementation with castling, pawn promotion, check/checkmate detection, and move history. 
-            Click any piece to see available moves, then click a highlighted square to make your move.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
