@@ -1,0 +1,5 @@
+{
+  "name": "Let's Play Chess",
+  "description": "A simple interactive chess game built with React, TypeScript, and Tailwind CSS. Allows players to move pieces according to standard chess rules, capture opponent pieces, and features pawn promotion. The UI includes a chess board, display of captured pieces, and turn indicators.",
+  "requestFramePermissions": []
+}
