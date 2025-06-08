@@ -43,7 +43,16 @@ const SquareComponent: React.FC<SquareComponentProps> = ({
 
   return (
     <div
-      className={`${squareBaseSize} flex items-center justify-center cursor-pointer transition-all duration-200 ${bgColor} ${hoverBgColor} ${selectionClasses} relative group hover:shadow-lg`}
+      className={`
+        ${squareBaseSize}
+        flex items-center justify-center
+        cursor-pointer
+        transition-all duration-200
+        ${bgColor}
+        ${hoverBgColor}
+        ${selectionClasses}
+        relative group hover:shadow-lg
+      `}
       onClick={() => onClick(position)}
       aria-label={`Square ${String.fromCharCode(97 + position.c)}${8 - position.r}${piece ? `, contains ${piece.color} ${piece.type}` : ''}${isSelected ? ', selected' : ''}${isPossibleMove ? ', possible move' : ''}`}
       role="button"
