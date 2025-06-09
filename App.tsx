@@ -32,6 +32,13 @@ const App: React.FC = () => {
   const [capturedByWhite, setCapturedByWhite] = useState<Piece[]>([]); // Pieces Black lost to White
   const [capturedByBlack, setCapturedByBlack] = useState<Piece[]>([]); // Pieces White lost to Black
 
+  // Mobile Overlay State
+  const [isInfoOverlayVisible, setIsInfoOverlayVisible] = useState(false);
+
+  const toggleInfoOverlay = useCallback(() => {
+    setIsInfoOverlayVisible(prev => !prev);
+  }, []);
+
   // Helper function to get legal moves (filters out moves that leave king in check)
   const getLegalMoves = useCallback((
     currentBoard: BoardState,
@@ -293,13 +300,24 @@ const App: React.FC = () => {
 
   return (
     <AppLayout
+      isInfoOverlayVisible={isInfoOverlayVisible}
+      toggleInfoOverlay={toggleInfoOverlay}
+      moveHistory={moveHistory}
+      gameStatusMessage={message}
+      onResetGame={resetGame}
+      isCheckmate={isCheckmate}
+      isStalemate={isStalemate}
+      isCheck={isCheck}
+      capturedByWhiteData={capturedByWhite}
+      capturedByBlackData={capturedByBlack}
       headerContent={
         <>
           <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent tracking-tight drop-shadow-lg">
             React Chess
           </h1>
           <div className="mt-3 md:mt-4">
-            <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm md:text-base font-medium shadow-lg backdrop-blur-sm border transition-all duration-300 ${
+            {/* This status message display is now only for desktop (lg screens) */}
+            <div className={`hidden lg:inline-flex items-center px-4 py-2 rounded-full text-sm md:text-base font-medium shadow-lg backdrop-blur-sm border transition-all duration-300 ${
               isCheckmate
                 ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-emerald-500/20'
                 : isStalemate
@@ -335,7 +353,7 @@ const App: React.FC = () => {
         </>
       }
       mainContent={
-        <div className="p-4 bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/50">
+        <div className="p-1 sm:p-2 md:p-4 bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/50">
           <BoardComponent
             board={board}
             selectedSquare={selectedSquare}
